@@ -7,16 +7,6 @@
 #include "dat.h"
 #include "fns.h"
 
-/*
- *	Grey tile pattern for root background
- */
-
-#define grey_width 4
-#define grey_height 2
-static char grey_bits[] = {
-	0x01, 0x04
-};
-
 void
 initcurs(s)
 ScreenInfo *s;
@@ -26,10 +16,6 @@ ScreenInfo *s;
 	s->sweep0 = XCreateFontCursor(dpy, XC_right_ptr);
 	s->boxcurs = XCreateFontCursor(dpy, XC_cross);
 
-	s->root_pixmap = XCreatePixmapFromBitmapData(dpy,
-		s->root, grey_bits, grey_width, grey_height,
-		s->black, s->white, s->depth);
-	
 	s->bordcurs[BorderN] = XCreateFontCursor(dpy, XC_top_side);
 	s->bordcurs[BorderNNE] = XCreateFontCursor(dpy, XC_top_right_corner);
 	s->bordcurs[BorderENE] = s->bordcurs[BorderNNE] ;

@@ -346,12 +346,6 @@ initscreen(ScreenInfo *s, int i, int background)
 	XChangeWindowAttributes(dpy, s->root, mask, &attr);
 	XSync(dpy, False);
 
-	if(background){
-		XSetWindowBackgroundPixmap(dpy, s->root, s->root_pixmap);
-		XClearWindow(dpy, s->root);
-	} else
-		system("xsetroot -solid grey30");
-
 	attrs.border_pixel =  colorpixel(dpy, s, s->depth, 0x88CC88, s->black);
 	attrs.background_pixel =  colorpixel(dpy, s, s->depth, 0xE9FFE9, s->white);
 	attrs.colormap = s->def_cmap;

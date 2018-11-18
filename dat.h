@@ -126,7 +126,6 @@ struct ScreenInfo {
 	Cursor		boxcurs;
 	Cursor		arrow;
 	Cursor		bordcurs[NBorder];
-	Pixmap		root_pixmap;
 	char			display[256];	/* arbitrary limit */
 };
 
