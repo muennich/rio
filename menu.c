@@ -123,6 +123,7 @@ button(XButtonEvent *e)
 	case Button1:
 		if(c){
 			XMapRaised(dpy, c->parent);
+			XAllowEvents(dpy, ReplayPointer, curtime);
 			top(c);
 			active(c);
 		}
@@ -140,18 +141,24 @@ button(XButtonEvent *e)
 	case Button3:
 		break;
 	case Button4:
+		if(c)
+			XAllowEvents(dpy, ReplayPointer, curtime);
 		/* scroll up changes to previous virtual screen */
 		if(!c && e->type == ButtonPress)
 			if(numvirtuals > 1 && virt > 0)
 				switch_to(virt - 1);
 		return;
 	case Button5:
+		if(c)
+			XAllowEvents(dpy, ReplayPointer, curtime);
 		/* scroll down changes to next virtual screen */
 		if(!c && e->type == ButtonPress)
 			if(numvirtuals > 1 && virt < numvirtuals - 1)
 				switch_to(virt + 1);
 		return;
 	default:
+		if(c)
+			XAllowEvents(dpy, ReplayPointer, curtime);
 		return;
 	}
 
