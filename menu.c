@@ -56,6 +56,7 @@ char	*b3items[B3FIXED+MAXHIDDEN+1] =
 	"New",
 	"Reshape",
 	"Move",
+	"Lower",
 	"Delete",
 	"Hide",
 	0
@@ -66,6 +67,7 @@ enum
 	New,
 	Reshape,
 	Move,
+	Lower,
 	Delete,
 	Hide
 };
@@ -165,6 +167,9 @@ button(XButtonEvent *e)
 	case Move:
 		move(selectwin(0, 0, s), Button3);
 		break;
+	case Lower:
+		lower(selectwin(1, 0, s));
+		break;
 	case Delete:
 		shift = 0;
 		c = selectwin(1, &shift, s);
@@ -254,6 +259,14 @@ move(Client *c, int but)
 	XRaiseWindow(dpy, c->parent);
 	XMoveWindow(dpy, c->parent, c->x-BORDER, c->y-BORDER);
 	sendconfig(c);
+}
+
+void
+lower(Client *c)
+{
+	if(c == 0)
+		return;
+	XLowerWindow(dpy, c->parent);
 }
 
 void

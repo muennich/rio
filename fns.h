@@ -71,6 +71,7 @@ void	button();
 void	spawn();
 void	reshape();
 void	move();
+void	lower();
 void	delete();
 void	hide();
 void	unhide();
