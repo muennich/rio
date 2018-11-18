@@ -6,15 +6,21 @@
 #include "dat.h"
 #include "fns.h"
 
+static int esccode;
+static int tabcode;
+
 static void alttab(int shift);
 
 void
 keysetup(void)
 {
 	int i;
-	int tabcode = XKeysymToKeycode(dpy, XK_Tab);
+
+	esccode = XKeysymToKeycode(dpy, XK_Escape);
+	tabcode = XKeysymToKeycode(dpy, XK_Tab);
 
 	for(i=0; i<num_screens; i++){
+		XGrabKey(dpy, esccode, Mod4Mask, screens[i].root, 0, GrabModeSync, GrabModeAsync);
 		XGrabKey(dpy, tabcode, Mod4Mask, screens[i].root, 0, GrabModeSync, GrabModeAsync);
 		XGrabKey(dpy, tabcode, Mod4Mask|ShiftMask, screens[i].root, 0, GrabModeSync, GrabModeAsync);
 	}
@@ -26,9 +32,10 @@ keypress(XKeyEvent *e)
 	/*
 	 * process key press here
 	 */
-	int tabcode = XKeysymToKeycode(dpy, XK_Tab);
 	if(e->keycode == tabcode && (e->state&Mod4Mask) == (Mod4Mask))
 		alttab(e->state&ShiftMask);
+	else if(e->keycode == esccode && (e->state&Mod4Mask) == (Mod4Mask))
+		hide(current);
 	XAllowEvents(dpy, SyncKeyboard, e->time);
 }
 
