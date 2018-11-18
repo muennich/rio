@@ -261,14 +261,11 @@ shuffle(int up)
 		c = 0;
 		/*for(c=clients; c->next; c=c->next) */
 		/*	; */
-		for(l=&clients; (*l)->next; l=&(*l)->next)
+		for(l=&clients; *l; l=&(*l)->next)
 			if ((*l)->state == 1)
 				c = *l;
 		if (c == 0)
 			return;
-		XMapRaised(dpy, c->parent);
-		top(c);
-		active(c);
 	}else{
 		c = clients;
 		for(l=&clients; *l; l=&(*l)->next)
@@ -276,10 +273,14 @@ shuffle(int up)
 		clients = c->next;
 		*l = c;
 		c->next = 0;
-		XLowerWindow(dpy, c->window);
+		for(c=clients; c; c=c->next)
+			if(c->state == 1)
+				break;
+		if (c == 0)
+			return;
 	}
-/*	XMapRaised(dpy, clients->parent); */
-/*	top(clients);	 */
-/*	active(clients); */
+	XMapRaised(dpy, c->parent);
+	top(c);
+	active(c);
 }
 
